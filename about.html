@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Vishv Enterprise Group</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & GLOBAL STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
+            --text-dark: #334155;
+            --text-light: #94a3b8;
+            --bg-light: #f8fafc;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        ul { list-style: none; }
+
+        /* Animation Utilities */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: var(--shadow-sm); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 200px; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.02); }
+        .logo img { height: 300px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 35px; align-items: center; }
+        
+        .nav-link { 
+            font-size: 15px; font-weight: 600; color: #475569; position: relative; 
+        }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -5px; left: 0; background-color: var(--primary); 
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; font-weight: 700; padding: 12px 28px; border-radius: 50px; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-apply:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .mobile-btn { display: none; background: none; border: none; color: var(--text-dark); font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; left: 0; top: 90px; box-shadow: var(--shadow-md); }
+        .mobile-link { display: block; padding: 15px 25px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 600; }
+        .mobile-link:hover { background-color: #f8fafc; color: var(--primary); padding-left: 30px; }
+
+        /* =========================================
+           3. PAGE HEADER
+           ========================================= */
+        .page-header { 
+            background-color: var(--secondary);
+            background-image: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            color: white; 
+            text-align: center; 
+            padding: 100px 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+        .page-header::after {
+            content: ''; position: absolute; bottom: -50px; left: -50px; width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+        .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 15px; position: relative; z-index: 1; }
+        .page-header p { font-size: 20px; color: #cbd5e1; font-weight: 500; position: relative; z-index: 1; }
+
+        /* =========================================
+           4. MAIN CONTENT
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+        .section-title { text-align: center; font-size: 36px; font-weight: 800; color: var(--secondary); margin-bottom: 60px; }
+        
+        /* Intro Section */
+        .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 80px; }
+        
+        .text-content h2 { font-size: 36px; font-weight: 800; color: var(--secondary); margin-bottom: 25px; line-height: 1.2; }
+        .text-content p { font-size: 17px; line-height: 1.8; color: #64748b; margin-bottom: 25px; }
+        
+        .image-content { position: relative; }
+        .image-content img { 
+            width: 100%; border-radius: 20px; 
+            box-shadow: var(--shadow-lg); 
+            transition: transform 0.5s ease;
+        }
+        .image-content:hover img { transform: scale(1.02); }
+        .image-content::before {
+            content: ''; position: absolute; top: 20px; left: 20px; width: 100%; height: 100%;
+            border: 2px solid var(--primary); border-radius: 20px; z-index: -1;
+            transition: transform 0.3s ease;
+        }
+        .image-content:hover::before { transform: translate(10px, 10px); }
+
+        /* Stats Section */
+        .stats-section { background-color: var(--secondary); color: white; padding: 80px 20px; margin-bottom: 100px; }
+        .stats-grid { 
+            max-width: 1200px; margin: 0 auto; 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; 
+            text-align: center; 
+        }
+        .stat-item h3 { font-size: 48px; font-weight: 800; color: var(--primary); margin-bottom: 10px; }
+        .stat-item p { font-size: 18px; color: #cbd5e1; }
+
+        /* Mission & Vision */
+        .mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 100px; }
+        .mv-card { 
+            background: white; padding: 50px 40px; border-radius: 20px; 
+            box-shadow: var(--shadow-sm); border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+        }
+        .mv-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); }
+        .mission { border-top: 6px solid var(--primary); }
+        .vision { border-top: 6px solid #0284c7; }
+        
+        .mv-header { display: flex; align-items: center; margin-bottom: 25px; }
+        .mv-header i { font-size: 36px; margin-right: 20px; }
+        .mission i { color: var(--primary); } 
+        .vision i { color: #0284c7; }
+        .mv-header h3 { font-size: 26px; font-weight: 700; color: var(--secondary); }
+        .mv-card p { font-size: 17px; line-height: 1.7; color: #64748b; }
+
+        /* Process Section */
+        .process-section { margin-bottom: 100px; }
+        .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; position: relative; }
+        
+        /* Connecting Line */
+        .process-grid::after {
+            content: ''; position: absolute; top: 40px; left: 0; width: 100%; height: 2px;
+            background: #e2e8f0; z-index: -1;
+            display: block;
+        }
+
+        .process-step { text-align: center; background: var(--bg-light); padding: 20px; z-index: 1; }
+        .step-icon { 
+            width: 80px; height: 80px; background: white; border: 2px solid var(--primary);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 20px; font-size: 32px; color: var(--primary);
+            transition: 0.3s;
+        }
+        .process-step:hover .step-icon { background: var(--primary); color: white; transform: scale(1.1); }
+        .process-step h4 { font-size: 20px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; }
+        .process-step p { font-size: 15px; color: #64748b; }
+
+        /* Why Choose Us / Values */
+        .values-section { background-color: white; padding: 100px 0; border-top: 1px solid #f1f5f9; }
+        .values-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .value-card { 
+            text-align: center; padding: 50px 30px; 
+            border: 1px solid #e2e8f0; border-radius: 20px; background: #f8fafc; 
+            transition: all 0.3s ease;
+        }
+        .value-card:hover { transform: translateY(-10px); box-shadow: var(--shadow-lg); background: white; }
+        .value-card i { font-size: 56px; margin-bottom: 25px; display: inline-block; transition: transform 0.4s ease; }
+        .value-card:hover i { transform: scale(1.1) rotate(10deg); }
+        .value-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; color: var(--secondary); }
+        .value-card p { color: #64748b; line-height: 1.6; font-size: 16px; }
+
+        /* =========================================
+           5. FOOTER
+           ========================================= */
+        footer { 
+            background-color: var(--secondary); color: var(--text-light); 
+            padding: 80px 20px 30px; margin-top: auto; 
+            border-top: 5px solid var(--primary);
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            margin-top: 60px; padding-top: 30px; 
+            text-align: center; font-size: 14px; opacity: 0.7;
+        }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { display: inline-block; transition: transform 0.2s; }
+        .footer-links a:hover { color: var(--primary); transform: translateX(5px); }
+        .footer-logo-img { height: 70px; width: auto; background: white; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; display: inline-block; }
+
+        /* =========================================
+           6. RESPONSIVE
+           ========================================= */
+        @media (max-width: 992px) {
+            .values-grid, .stats-grid, .process-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .split-section { gap: 40px; }
+            .process-grid::after { display: none; } /* Hide line on tablet/mobile */
+        }
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .split-section, .mv-grid, .values-grid, .stats-grid, .process-grid, .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .logo { width: 160px; }
+            .page-header h1 { font-size: 36px; }
+            .image-content { order: -1; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="client.html" class="nav-link">Our Clients</a>
+                <a href="about.html" class="nav-link active">About Us</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="service.html" class="mobile-link">Services</a>
+            <a href="client.html" class="mobile-link">Our Clients</a>
+             <a href="about.html" class="mobile-link" style="color: #f97316;">About Us</a>
+              <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="apply.html" class="mobile-link">Apply for Job</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="animate-up">
+            <h1>About Vishv Enterprise</h1>
+            <p>Turning Aspirations Into Reality</p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="split-section animate-up delay-100">
+            <div class="text-content">
+                <h2>Building Your Future with Confidence</h2>
+                <p>Finding the ideal job and creating your life on your own are both freeing and challenging. Having to make a decision from so many options could potentially cause confusion. At Vishv Enterprise, we simplify this journey for you.</p>
+                <p>Our team of specialists pays close attention to your demands, selects the top applicants, and gives you quantifiable results to ensure that we meet your business objectives and go above and beyond your expectations. We bridge the gap between ambition and opportunity.</p>
+            </div>
+            <div class="image-content">
+                <img src="https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Team Discussion">
+            </div>
+        </div>
+    </div>
+
+    <div class="stats-section animate-up delay-100">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <h3>10+</h3>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <h3>500+</h3>
+                <p>Clients Served</p>
+            </div>
+            <div class="stat-item">
+                <h3>10k+</h3>
+                <p>Staff Placed</p>
+            </div>
+            <div class="stat-item">
+                <h3>24/7</h3>
+                <p>Support System</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container animate-up delay-200">
+        <div class="mv-grid">
+            <div class="mv-card mission">
+                <div class="mv-header">
+                    <i class="ph-fill ph-target"></i>
+                    <h3>Our Vision</h3>
+                </div>
+                <p>To assist those attempting to turn their aspirations into reality as they begin their professions. By expanding our services abroad, we hope to contribute to a more wholesome society by offering solid commitment and first-rate services.</p>
+            </div>
+            <div class="mv-card vision">
+                <div class="mv-header">
+                    <i class="ph-fill ph-eye"></i>
+                    <h3>Our Mission</h3>
+                </div>
+                <p>To assist healthcare management, industrial sectors, and corporate experts in finding the best talent. We are dedicated to assisting both companies in finding the appropriate employees and job seekers in finding the right opportunities.</p>
+            </div>
+        </div>
+
+        <div class="process-section">
+            <h2 class="section-title">Our Recruitment Process</h2>
+            <div class="process-grid">
+                <div class="process-step">
+                    <div class="step-icon"><i class="ph-fill ph-strategy"></i></div>
+                    <h4>1. Strategy</h4>
+                    <p>Understanding client needs and planning the recruitment roadmap.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon"><i class="ph-fill ph-magnifying-glass"></i></div>
+                    <h4>2. Sourcing</h4>
+                    <p>Screening our vast database to find the perfect candidates.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon"><i class="ph-fill ph-chats-circle"></i></div>
+                    <h4>3. Interview</h4>
+                    <p>Rigorous assessment to ensure skill and cultural fit.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-icon"><i class="ph-fill ph-handshake"></i></div>
+                    <h4>4. Onboarding</h4>
+                    <p>Seamless integration of the selected talent into your team.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="values-section">
+        <h2 class="section-title animate-up">Why Choose Us?</h2>
+        <div class="values-grid animate-up delay-100">
+            <div class="value-card">
+                <i class="ph-duotone ph-check-circle" style="color: #f97316;"></i>
+                <h3>Clarity</h3>
+                <p>We help you uncover answers that increase your confidence about what you are getting into, keeping you motivated.</p>
+            </div>
+            <div class="value-card">
+                <i class="ph-duotone ph-users-three" style="color: #0284c7;"></i>
+                <h3>Specialist Team</h3>
+                <p>Our experts pay close attention to your demands and ensure quantifiable results that meet your objectives.</p>
+            </div>
+            <div class="value-card">
+                <i class="ph-duotone ph-globe" style="color: #10b981;"></i>
+                <h3>Global Vision</h3>
+                <p>Expanding our services abroad to contribute to a wholesome society and better economic alternatives.</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p>Trusted manpower solutions for industrial & corporate infrastructure.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="client.html">Our Clients</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Manpower Supply</a></li>
+                    <li><a href="#">Healthcare Management</a></li>
+                    <li><a href="#">Global Staffing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Contact</h3>
+                <p style="margin-bottom: 10px;"><i class="ph-fill ph-map-pin" style="color:var(--primary);"></i> Gandhinagar, Gujarat</p>
+                <p><i class="ph-fill ph-envelope" style="color:var(--primary);"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - Vishv Enterprise Group</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & GLOBAL STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
+            --text-dark: #334155;
+            --text-light: #94a3b8;
+            --bg-light: #f8fafc;
+            --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-dark); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+        ul { list-style: none; }
+
+        /* Animation Utilities */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: var(--shadow-sm); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 200px; transition: transform 0.3s; }
+        .logo:hover { transform: scale(1.02); }
+        .logo img { height: 300px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 35px; align-items: center; }
+        
+        .nav-link { 
+            font-size: 15px; font-weight: 600; color: #475569; position: relative; 
+        }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -5px; left: 0; background-color: var(--primary); 
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; font-weight: 700; padding: 12px 28px; border-radius: 50px; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            transition: all 0.3s ease;
+        }
+        .btn-apply:hover { 
+            transform: translateY(-2px); 
+            box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .mobile-btn { display: none; background: none; border: none; color: var(--text-dark); font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; left: 0; top: 90px; box-shadow: var(--shadow-md); }
+        .mobile-link { display: block; padding: 15px 25px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 600; }
+        .mobile-link:hover { background-color: #f8fafc; color: var(--primary); padding-left: 30px; }
+
+        /* =========================================
+           3. PAGE HEADER
+           ========================================= */
+        .page-header { 
+            background-color: var(--secondary);
+            background-image: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+            color: white; 
+            text-align: center; 
+            padding: 100px 20px; 
+            position: relative;
+            overflow: hidden;
+        }
+        /* Pattern Overlay */
+        .page-header::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#ffffff 1px, transparent 1px);
+            background-size: 30px 30px; opacity: 0.05;
+        }
+
+        .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 15px; position: relative; z-index: 1; }
+        .page-header p { font-size: 20px; color: #cbd5e1; font-weight: 500; position: relative; z-index: 1; }
+
+        /* =========================================
+           4. SERVICES LAYOUT
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 100px 20px; }
+
+        .service-row { 
+            display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; 
+            margin-bottom: 120px; 
+        }
+        
+        /* Alternating Layout */
+        .order-flip .service-text { order: 2; }
+        .order-flip .service-img-wrapper { order: 1; }
+
+        /* Text Content */
+        .service-text h2 { font-size: 36px; font-weight: 800; color: var(--secondary); margin-bottom: 20px; }
+        
+        .service-header { display: flex; align-items: center; margin-bottom: 25px; }
+        .service-icon-box { 
+            width: 65px; height: 65px; border-radius: 16px; 
+            display: flex; align-items: center; justify-content: center; 
+            margin-right: 20px; font-size: 32px;
+            transition: transform 0.3s ease;
+        }
+        /* Icon Bounce on Hover of Row */
+        .service-row:hover .service-icon-box { transform: scale(1.1) rotate(5deg); }
+
+        .service-desc { font-size: 17px; line-height: 1.7; color: #64748b; margin-bottom: 35px; }
+
+        /* Role List Box */
+        .role-box { 
+            background-color: white; padding: 30px; border-radius: 16px; 
+            border: 1px solid #e2e8f0; 
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            position: relative; overflow: hidden;
+        }
+        
+        .role-box:hover { 
+            transform: translateY(-5px); 
+            box-shadow: var(--shadow-md); 
+            border-color: #cbd5e1;
+        }
+
+        .role-box h3 { font-size: 18px; font-weight: 700; color: var(--secondary); margin-bottom: 20px; }
+        .role-list li { display: flex; align-items: center; margin-bottom: 12px; color: #475569; font-weight: 500; font-size: 15px; }
+        .role-list i { margin-right: 12px; font-size: 20px; }
+
+        /* Image Wrapper with Zoom Effect */
+        .service-img-wrapper { 
+            border-radius: 20px; overflow: hidden; 
+            box-shadow: var(--shadow-lg); 
+            height: 450px; position: relative;
+        }
+        .service-img-wrapper img { 
+            width: 100%; height: 100%; object-fit: cover; 
+            transition: transform 0.6s ease; 
+        }
+        .service-row:hover .service-img-wrapper img { transform: scale(1.05); }
+
+        /* =========================================
+           5. COLOR THEMES
+           ========================================= */
+        
+        /* Theme: Industrial (Emerald) */
+        .theme-industrial .service-icon-box { background-color: #ecfdf5; color: #10b981; }
+        .theme-industrial .role-list i { color: #10b981; }
+        .theme-industrial .role-box { border-left: 5px solid #10b981; }
+        
+        /* Theme: Corporate (Blue) */
+        .theme-corporate .service-icon-box { background-color: #eff6ff; color: #3b82f6; }
+        .theme-corporate .role-list i { color: #3b82f6; }
+        .theme-corporate .role-box { border-left: 5px solid #3b82f6; }
+
+        /* Theme: Housekeeping (Amber) */
+        .theme-housekeeping .service-icon-box { background-color: #fffbeb; color: #f59e0b; }
+        .theme-housekeeping .role-list i { color: #f59e0b; }
+        .theme-housekeeping .role-box { border-left: 5px solid #f59e0b; }
+
+        /* Theme: Security (Slate/Dark) */
+        .theme-security .service-icon-box { background-color: #f1f5f9; color: #475569; }
+        .theme-security .role-list i { color: #475569; }
+        .theme-security .role-box { border-left: 5px solid #475569; }
+
+        /* Theme: Logistics (Teal) */
+        .theme-logistics .service-icon-box { background-color: #ccfbf1; color: #14b8a6; }
+        .theme-logistics .role-list i { color: #14b8a6; }
+        .theme-logistics .role-box { border-left: 5px solid #14b8a6; }
+
+        /* =========================================
+           6. CALL TO ACTION (CTA)
+           ========================================= */
+        .cta-section { margin-top: 50px; }
+        .cta-box { 
+            background: linear-gradient(120deg, var(--secondary) 0%, #1e293b 100%);
+            color: white; text-align: center; padding: 80px 40px; border-radius: 24px; 
+            position: relative; overflow: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        /* Decorative circle */
+        .cta-box::after {
+            content: ''; position: absolute; top: -50px; right: -50px; width: 300px; height: 300px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%; pointer-events: none;
+        }
+
+        .cta-box h2 { font-size: 36px; font-weight: 800; margin-bottom: 20px; }
+        .cta-box p { font-size: 18px; color: #cbd5e1; margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        
+        .btn-cta { 
+            background-color: var(--primary); color: white; padding: 18px 40px; 
+            border-radius: 50px; font-weight: 700; font-size: 18px; display: inline-block;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.4);
+            transition: all 0.3s ease;
+        }
+        .btn-cta:hover { 
+            transform: translateY(-3px) scale(1.05); 
+            box-shadow: 0 10px 25px rgba(249, 115, 22, 0.5);
+            background-color: var(--primary-dark);
+        }
+
+        /* =========================================
+           7. FOOTER
+           ========================================= */
+        footer { 
+            background-color: var(--secondary); color: var(--text-light); 
+            padding: 80px 20px 30px; margin-top: auto; 
+            border-top: 5px solid var(--primary);
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            margin-top: 60px; padding-top: 30px; 
+            text-align: center; font-size: 14px; opacity: 0.7;
+        }
+        
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { display: inline-block; transition: transform 0.2s; }
+        .footer-links a:hover { color: var(--primary); transform: translateX(5px); }
+        
+        .footer-logo-img { 
+            height: 70px; width: auto; background: white; padding: 10px 15px; 
+            border-radius: 8px; margin-bottom: 20px; display: inline-block; 
+        }
+
+        /* =========================================
+           8. RESPONSIVE
+           ========================================= */
+        @media (max-width: 992px) {
+            .service-row { gap: 40px; }
+            .service-img-wrapper { height: 350px; }
+        }
+
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .service-row { grid-template-columns: 1fr; gap: 40px; margin-bottom: 80px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .logo { width: 160px; }
+            
+            .order-flip .service-text { order: 1; }
+            .order-flip .service-img-wrapper { order: 2; }
+            
+            .page-header h1 { font-size: 32px; }
+            .cta-box { padding: 50px 20px; }
+            .cta-box h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="service.html" class="nav-link active">Services</a>
+                <a href="client.html" class="nav-link">Our Clients</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="service.html" class="mobile-link" style="color: #f97316;">Services</a>
+            <a href="client.html" class="mobile-link">Our Clients</a>
+             <a href="about.html" class="mobile-link">About Us</a>
+              <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="apply.html" class="mobile-link">Apply for Job</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="animate-up">
+            <h1>Expert Manpower Solutions</h1>
+            <p>Connecting Business with Talent across Gujarat</p>
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div class="service-row theme-industrial animate-up delay-100">
+            <div class="service-text">
+                <div class="service-header">
+                    <div class="service-icon-box"><i class="ph ph-factory"></i></div>
+                    <h2>Industrial Manpower</h2>
+                </div>
+                <p class="service-desc">The manufacturing sector demands a robust workforce. We provide skilled, semi-skilled, and unskilled labor for factories, warehouses, and production units. We ensure all compliance and verification is handled efficiently.</p>
+                <div class="role-box">
+                    <h3>Roles We Provide:</h3>
+                    <ul class="role-list">
+                        <li><i class="ph-bold ph-check-circle"></i> Skilled Machine Operators</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Assembly Line Workers</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Packaging Staff</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Helpers & Loaders</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-img-wrapper">
+                <img src="img/about.png" alt="Industrial Manpower">
+            </div>
+        </div>
+
+        <div class="service-row theme-corporate order-flip animate-up delay-200">
+            <div class="service-text">
+                <div class="service-header">
+                    <div class="service-icon-box"><i class="ph ph-briefcase"></i></div>
+                    <h2>Corporate Staffing</h2>
+                </div>
+                <p class="service-desc">Finding the right office staff is crucial for smooth operations. We specialize in placing qualified white-collar professionals for permanent and contractual roles in corporate offices, banks, and institutions.</p>
+                <div class="role-box">
+                    <h3>Roles We Provide:</h3>
+                    <ul class="role-list">
+                        <li><i class="ph-bold ph-check-circle"></i> Administrative Assistants</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Data Entry Operators</li>
+                        <li><i class="ph-bold ph-check-circle"></i> HR Executives</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Receptionists</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-img-wrapper">
+                <img src="img/service.png" alt="Corporate Staffing">
+            </div>
+        </div>
+
+        <div class="service-row theme-housekeeping animate-up delay-200">
+            <div class="service-text">
+                <div class="service-header">
+                    <div class="service-icon-box"><i class="ph ph-broom"></i></div>
+                    <h2>Housekeeping Services</h2>
+                </div>
+                <p class="service-desc">A clean environment increases productivity. Vishv Enterprise provides professional housekeeping solutions for corporate offices, malls, hospitals, and industrial complexes.</p>
+                <div class="role-box">
+                    <h3>Roles We Provide:</h3>
+                    <ul class="role-list">
+                        <li><i class="ph-bold ph-check-circle"></i> Housekeeping Supervisors</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Office Boys / Peons</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Pantry Staff</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Industrial Cleaners</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-img-wrapper">
+                <img src="img/service1.png" alt="Housekeeping">
+            </div>
+        </div>
+
+        <div class="service-row theme-security order-flip animate-up delay-300">
+            <div class="service-text">
+                <div class="service-header">
+                    <div class="service-icon-box"><i class="ph ph-shield-check"></i></div>
+                    <h2>Security Services</h2>
+                </div>
+                <p class="service-desc">Protect your assets and people with our trained security personnel. We provide vigilant, well-groomed, and disciplined security guards for residential, commercial, and industrial properties.</p>
+                <div class="role-box">
+                    <h3>Roles We Provide:</h3>
+                    <ul class="role-list">
+                        <li><i class="ph-bold ph-check-circle"></i> Armed/Unarmed Guards</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Security Supervisors</li>
+                        <li><i class="ph-bold ph-check-circle"></i> CCTV Operators</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Gatekeepers</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-img-wrapper">
+                <img src="img/service2.png" alt="Security Services">
+            </div>
+        </div>
+
+        <div class="service-row theme-logistics animate-up delay-300">
+            <div class="service-text">
+                <div class="service-header">
+                    <div class="service-icon-box"><i class="ph ph-truck"></i></div>
+                    <h2>Logistics & Support</h2>
+                </div>
+                <p class="service-desc">Efficient logistics require reliable manpower. We supply experienced drivers and warehouse staff to ensure your supply chain operates without interruption.</p>
+                <div class="role-box">
+                    <h3>Roles We Provide:</h3>
+                    <ul class="role-list">
+                        <li><i class="ph-bold ph-check-circle"></i> Heavy Vehicle Drivers</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Warehouse Managers</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Inventory Clerks</li>
+                        <li><i class="ph-bold ph-check-circle"></i> Delivery Personnel</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="service-img-wrapper">
+                <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" alt="Logistics">
+            </div>
+        </div>
+
+        <div class="cta-section animate-up delay-300">
+            <div class="cta-box">
+                <h2>Need Staff for Your Business?</h2>
+                <p>We are ready to deploy qualified professionals to meet your company's needs immediately. Get a customized quote today.</p>
+                <a href="apply.html" class="btn-cta">Apply Now</a>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p>Trusted manpower solutions for industrial & corporate infrastructure.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="client.html">Our Clients</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Manpower Supply</a></li>
+                    <li><a href="#">Healthcare Management</a></li>
+                    <li><a href="#">Global Staffing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Contact</h3>
+                <p style="margin-bottom: 10px;"><i class="ph-fill ph-map-pin" style="color:var(--primary);"></i> Gandhinagar, Gujarat</p>
+                <p><i class="ph-fill ph-envelope" style="color:var(--primary);"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+    </script>
+</body>
+</html>

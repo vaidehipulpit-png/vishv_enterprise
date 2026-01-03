@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliance & Ethics - Vishv Enterprise Group</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & GLOBAL STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #334155; display: flex; flex-direction: column; min-height: 100vh; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: #ffffff; 
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 280px; }
+        .logo img { height: 80px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 15px; font-weight: 600; color: #475569; }
+        .nav-link:hover { color: #f97316; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background-color: #f97316; color: white; font-weight: 700; padding: 12px 24px; border-radius: 8px; 
+            box-shadow: 0 4px 10px rgba(249, 115, 22, 0.2);
+        }
+        .btn-apply:hover { background-color: #ea580c; transform: translateY(-1px); }
+
+        .mobile-btn { display: none; background: none; border: none; color: #334155; font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; left: 0; top: 90px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+        .mobile-link { display: block; padding: 15px 20px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 600; }
+
+        /* =========================================
+           3. PAGE HEADER
+           ========================================= */
+        .page-header { background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%); color: white; text-align: center; padding: 80px 20px; }
+        .page-header h1 { font-size: 42px; font-weight: 800; margin-bottom: 15px; }
+        .page-header p { font-size: 20px; color: #f97316; font-weight: 500; }
+
+        /* =========================================
+           4. COMPLIANCE CONTENT
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+        
+        /* Intro */
+        .intro-box { text-align: center; max-width: 800px; margin: 0 auto 60px auto; }
+        .intro-box h2 { font-size: 32px; font-weight: 700; color: #0f172a; margin-bottom: 20px; }
+        .intro-box p { font-size: 18px; line-height: 1.8; color: #4b5563; }
+
+        /* Compliance Grid (2 Columns) */
+        .compliance-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-bottom: 80px; }
+        
+        .section-title { font-size: 24px; font-weight: 700; color: #0f172a; margin-bottom: 25px; display: flex; align-items: center; }
+        .section-title i { font-size: 32px; margin-right: 15px; }
+        
+        /* List Items */
+        .compliance-list { display: flex; flex-direction: column; gap: 20px; }
+        .compliance-item { background: white; padding: 20px; border-radius: 10px; border: 1px solid #e2e8f0; }
+        .compliance-item h4 { font-size: 16px; font-weight: 700; color: #0f172a; display: flex; align-items: center; margin-bottom: 10px; }
+        .compliance-item h4 i { color: #10b981; margin-right: 10px; font-size: 20px; }
+        .compliance-item p { font-size: 14px; color: #64748b; line-height: 1.5; margin-left: 30px; }
+
+        /* Blue Theme for Right Column */
+        .blue-theme .compliance-item { background: #eff6ff; border-color: #dbeafe; }
+        .blue-theme .compliance-item h4 i { color: #3b82f6; }
+
+        /* Download Box */
+        .download-box { background-color: #0f172a; color: white; text-align: center; padding: 40px; border-radius: 12px; margin-top: 30px; }
+        .download-box i { font-size: 48px; color: #f97316; margin-bottom: 15px; display: block; }
+        .download-box h4 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+        .download-box p { font-size: 14px; color: #94a3b8; margin-bottom: 20px; }
+        .btn-download { background-color: #f97316; color: white; padding: 10px 25px; border-radius: 6px; font-weight: 600; display: inline-block; }
+        .btn-download:hover { background-color: #ea580c; }
+
+        /* Workflow Steps */
+        .workflow-title { text-align: center; font-size: 32px; font-weight: 700; color: #0f172a; margin-bottom: 50px; }
+        .workflow-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+        .step-card { background: white; padding: 30px 20px; text-align: center; border-radius: 12px; border: 1px solid #e2e8f0; }
+        .step-number { width: 50px; height: 50px; background: #ffedd5; color: #f97316; font-weight: 800; font-size: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px auto; }
+        .step-card h4 { font-weight: 700; margin-bottom: 10px; color: #0f172a; }
+        .step-card p { font-size: 14px; color: #64748b; }
+
+        /* =========================================
+           5. FOOTER
+           ========================================= */
+        footer { background-color: #0f172a; color: #94a3b8; padding: 60px 20px 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 20px; text-align: center; font-size: 14px; }
+        .footer-links li { margin-bottom: 10px; }
+        .footer-links a:hover { color: #f97316; }
+        .footer-logo-img { height: 80px; width: auto; background: white; padding: 10px; border-radius: 8px; margin-bottom: 15px; display: inline-block; }
+
+        /* =========================================
+           6. RESPONSIVE
+           ========================================= */
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .compliance-grid, .workflow-grid, .footer-grid { grid-template-columns: 1fr; }
+            .logo { width: 180px; }
+            .logo img { height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="compliance.html" class="nav-link active">Compliance</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="about.html" class="mobile-link">About Us</a>
+            <a href="service.html" class="mobile-link">Services</a>
+            <a href="compliance.html" class="mobile-link" style="color: #f97316;">Compliance</a>
+            <a href="apply.html" class="mobile-link">Apply for Job</a>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Statutory & Ethical Compliance</h1>
+        <p>Upholding Integrity. Ensuring Safety.</p>
+    </header>
+
+    <div class="container">
+        
+        <div class="intro-box">
+            <h2>Commitment to Industrial Standards</h2>
+            <p>Industrial manpower requires the highest level of trust and adherence to legal frameworks. At Vishv Enterprise, we strictly follow the <strong>Contract Labour Act</strong> and <strong>Minimum Wages Act</strong>, ensuring that the rights of our workforce are protected, and that all operations are conducted under strict regulatory protocols.</p>
+        </div>
+
+        <div class="compliance-grid">
+            
+            <div>
+                <div class="section-title">
+                    <i class="ph ph-scale text-emerald-600"></i>
+                    Regulatory Adherence
+                </div>
+                <div class="compliance-list">
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-check-circle"></i> Contract Labour Act (1970)</h4>
+                        <p>Full compliance with CLRA regulations, ensuring valid licenses for all contracted workforce deployment.</p>
+                    </div>
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-check-circle"></i> EPF & ESIC Compliance</h4>
+                        <p>100% adherence to Provident Fund and Employee State Insurance contributions for social security.</p>
+                    </div>
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-check-circle"></i> Factory Act & Safety</h4>
+                        <p>Strict implementation of safety norms as per the Factories Act, ensuring a hazard-free work environment.</p>
+                    </div>
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-check-circle"></i> Minimum Wages Act</h4>
+                        <p>We guarantee fair compensation, adhering strictly to state and central minimum wage notifications.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="blue-theme">
+                <div class="section-title">
+                    <i class="ph ph-shield-check text-blue-600"></i>
+                    Ethics & Safety Protocols
+                </div>
+                <div class="compliance-list">
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-lock-key"></i> Payroll Transparency</h4>
+                        <p>Direct bank transfers and transparent salary slips to ensure zero exploitation of workforce.</p>
+                    </div>
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-warning-circle"></i> Zero Child Labor</h4>
+                        <p>Strict age verification protocols to ensure no under-aged individuals are employed in any capacity.</p>
+                    </div>
+                    <div class="compliance-item">
+                        <h4><i class="ph-fill ph-users-three"></i> Anti-Harassment Policy</h4>
+                        <p>A zero-tolerance policy towards harassment, ensuring a safe and dignified workplace for all.</p>
+                    </div>
+                </div>
+
+                <div class="download-box">
+                    <i class="ph ph-file-lock"></i>
+                    <h4>Compliance Charter</h4>
+                    <p>Download our comprehensive guide on our statutory policies and certifications.</p>
+                    <a href="#" class="btn-download">Download Charter</a>
+                </div>
+            </div>
+
+        </div>
+
+        <h2 class="workflow-title">Our Compliance Workflow</h2>
+        <div class="workflow-grid">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h4>Documentation</h4>
+                <p>Complete KYC and background verification of every employee before deployment.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h4>Induction</h4>
+                <p>Safety training and briefing on company policies and site regulations.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h4>Deployment</h4>
+                <p>On-site placement with proper ID cards, uniforms, and safety gear.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h4>Monthly Audit</h4>
+                <p>Regular audits of PF/ESIC challans and wage registers for transparency.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p style="font-size: 14px; line-height: 1.6;">Vishv Enterprise Group LLP. Providing solid commitment and first-rate services to turn aspirations into reality.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="service.html">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li>Manpower Supply</li>
+                    <li>Healthcare Management</li>
+                    <li>Global Staffing</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Contact</h3>
+                <p style="font-size: 14px;"><i class="ph-fill ph-map-pin"></i> Gandhinagar, Gujarat</p>
+                <p style="font-size: 14px; margin-top: 10px;"><i class="ph-fill ph-envelope"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Clients - Vishv Enterprise Group</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & GLOBAL STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #f97316;       /* Orange */
+            --primary-dark: #c2410c;
+            --primary-light: #ffedd5;
+            --secondary: #0f172a;     /* Dark Blue */
+            --text-main: #334155;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: var(--bg-light); 
+            color: var(--text-main); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+            overflow-x: hidden;
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* Animation Keyframes */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animate-enter {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0; /* Hidden by default until animated */
+        }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: var(--shadow-md); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 200px; }
+        .logo img { height: 300px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 15px; font-weight: 600; color: var(--text-light); position: relative; }
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; bottom: -4px; left: 0;
+            background-color: var(--primary); transition: var(--transition);
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; font-weight: 700; padding: 12px 28px; border-radius: 50px; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            transition: var(--transition);
+        }
+        .btn-apply:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(249, 115, 22, 0.5); }
+
+        .mobile-btn { display: none; background: none; border: none; color: var(--text-main); font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; left: 0; top: 90px; box-shadow: var(--shadow-xl); }
+        .mobile-link { display: block; padding: 15px 25px; border-bottom: 1px solid #f1f5f9; color: var(--text-light); font-weight: 600; }
+        .mobile-link:hover { background-color: var(--bg-light); color: var(--primary); padding-left: 30px; }
+
+        /* =========================================
+           3. PAGE HEADER
+           ========================================= */
+        .page-header { 
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%); 
+            color: white; text-align: center; padding: 100px 20px 140px; 
+            position: relative; overflow: hidden;
+        }
+        /* Abstract Background Pattern */
+        .page-header::before {
+            content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+            transform: rotate(30deg); pointer-events: none;
+        }
+        .page-header h1 { font-size: 48px; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; position: relative; }
+        .page-header p { font-size: 20px; color: #cbd5e1; font-weight: 500; position: relative; }
+        .highlight-text { color: var(--primary); }
+
+        /* =========================================
+           4. CLIENTS SECTION STYLES
+           ========================================= */
+        .container { max-width: 1200px; margin: 0 auto; padding: 80px 20px; }
+
+        /* Stats Counter Row */
+        .stats-row { 
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; 
+            background: white; border-radius: 20px; margin-top: -80px; 
+            box-shadow: var(--shadow-xl); position: relative; z-index: 10;
+            overflow: hidden;
+        }
+        .stat-item { 
+            text-align: center; padding: 40px 20px; 
+            border-right: 1px solid #f1f5f9; 
+            transition: var(--transition);
+            position: relative;
+        }
+        .stat-item:last-child { border-right: none; }
+        
+        /* Hover Effect for Stats */
+        .stat-item::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
+            background: var(--primary); transform: scaleX(0); transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .stat-item:hover { background-color: #fff7ed; transform: translateY(-5px); }
+        .stat-item:hover::after { transform: scaleX(1); }
+        
+        .stat-number { font-size: 42px; font-weight: 800; color: var(--primary); display: block; margin-bottom: 5px; }
+        .stat-label { font-size: 14px; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 1px; }
+
+        /* Sector Grid */
+        .sector-title { text-align: center; font-size: 36px; font-weight: 800; color: var(--secondary); margin: 80px 0 50px; }
+        .sector-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        
+        .sector-card { 
+            background: white; border-radius: 16px; padding: 35px 30px; 
+            border: 1px solid #e2e8f0; 
+            transition: var(--transition); 
+            display: flex; align-items: flex-start;
+            position: relative; overflow: hidden;
+        }
+        
+        /* Card Hover Effects */
+        .sector-card:hover { 
+            transform: translateY(-10px); 
+            box-shadow: var(--shadow-xl); 
+            border-color: transparent;
+        }
+        
+        .sector-icon { 
+            min-width: 60px; height: 60px; 
+            background: #f0f9ff; color: #0284c7; 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 32px; margin-right: 20px;
+            transition: var(--transition);
+        }
+        
+        .sector-card:hover .sector-icon { 
+            background: var(--primary); color: white; 
+            transform: rotateY(360deg); /* 3D Rotation on hover */
+        }
+        
+        .sector-info h3 { font-size: 20px; font-weight: 700; color: var(--secondary); margin-bottom: 10px; transition: color 0.3s; }
+        .sector-card:hover .sector-info h3 { color: var(--primary); }
+        .sector-info p { font-size: 15px; color: var(--text-light); line-height: 1.6; }
+
+        /* Logo Grid (The Main Client List) */
+        .logo-section { background-color: #f1f5f9; padding: 80px 20px; margin-top: 80px; position: relative; }
+        /* Decorative Background */
+        .logo-section::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 20px 20px; opacity: 0.3; pointer-events: none;
+        }
+
+        .client-logos { 
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 25px; 
+            max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+        }
+        
+        .client-box { 
+            background: white; height: 130px; border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            padding: 20px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border: 1px solid white;
+            transition: var(--transition);
+            filter: grayscale(100%); opacity: 0.7;
+            cursor: pointer;
+        }
+        
+        /* Client Logo Hover */
+        .client-box:hover { 
+            filter: grayscale(0%); opacity: 1; 
+            transform: translateY(-8px) scale(1.03); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.08); 
+            border-color: var(--primary-light);
+        }
+        
+        .client-placeholder { 
+            font-weight: 800; color: #cbd5e1; font-size: 18px; 
+            text-transform: uppercase; letter-spacing: 1px;
+            width: 100%; height: 100%; 
+            display: flex; align-items: center; justify-content: center; 
+            border: 2px dashed #e2e8f0; border-radius: 8px;
+            transition: 0.3s;
+        }
+        .client-box:hover .client-placeholder { color: var(--primary); border-color: var(--primary-light); }
+
+        /* Testimonial Section */
+        .testimonial-container { max-width: 900px; margin: 100px auto 40px; text-align: center; }
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            border: 1px solid #e2e8f0;
+            position: relative;
+        }
+        .quote-icon { 
+            font-size: 64px; color: var(--primary-light); 
+            position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+            background: var(--bg-light); padding: 0 20px; border-radius: 50%;
+        }
+        .testimonial-text { font-size: 24px; font-weight: 500; font-style: italic; color: var(--text-main); line-height: 1.6; margin: 20px 0 30px; }
+        .client-name { font-weight: 800; color: var(--secondary); font-size: 20px; }
+        .client-role { color: var(--primary); font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+
+        /* =========================================
+           5. FOOTER
+           ========================================= */
+        footer { 
+            background-color: var(--secondary); color: var(--text-light); 
+            padding: 80px 20px 30px; margin-top: auto; 
+            border-top: 5px solid var(--primary);
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            margin-top: 60px; padding-top: 30px; 
+            text-align: center; font-size: 14px; opacity: 0.7;
+        }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { display: inline-block; transition: 0.2s; }
+        .footer-links a:hover { color: var(--primary); transform: translateX(5px); }
+        .footer-logo-img { height: 70px; width: auto; background: white; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; display: inline-block; }
+
+        /* =========================================
+           6. RESPONSIVE
+           ========================================= */
+        @media (max-width: 992px) {
+            .sector-grid { grid-template-columns: repeat(2, 1fr); }
+            .client-logos { grid-template-columns: repeat(3, 1fr); }
+            .stats-row { display: grid; grid-template-columns: 1fr 1fr; }
+            .stat-item { border-right: none; border-bottom: 1px solid #f1f5f9; }
+            .stat-item:nth-last-child(-n+2) { border-bottom: none; }
+        }
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .sector-grid { grid-template-columns: 1fr; }
+            .client-logos { grid-template-columns: repeat(2, 1fr); }
+            .logo { width: 160px; }
+            .page-header h1 { font-size: 36px; }
+            .testimonial-text { font-size: 18px; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="client.html" class="nav-link active">Our Clients</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="service.html" class="mobile-link">Services</a>
+            <a href="client.html" class="mobile-link" style="color: #f97316;">Our Clients</a>
+             <a href="about.html" class="mobile-link">About Us</a>
+              <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="apply.html" class="mobile-link">Apply for Job</a>
+        </div>
+    </nav>
+
+    <header class="page-header"> 
+        <div class="animate-enter">
+            <h1>Our Valued <span class="highlight-text">Partners</span></h1>
+            <p>Building Stronger Businesses Together</p>
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <div class="stats-row animate-enter delay-100">
+            <div class="stat-item">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Corporate Clients</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2k+</span>
+                <span class="stat-label">Manpower Deployed</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">12</span>
+                <span class="stat-label">Cities Covered</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">100%</span>
+                <span class="stat-label">Compliance Record</span>
+            </div>
+        </div>
+
+        <h2 class="sector-title animate-enter delay-200">Industries We Serve</h2>
+        <div class="sector-grid animate-enter delay-200">
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-factory"></i></div>
+                <div class="sector-info">
+                    <h3>Manufacturing</h3>
+                    <p>Providing skilled machine operators and assembly line workers for major production units.</p>
+                </div>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-buildings"></i></div>
+                <div class="sector-info">
+                    <h3>Real Estate</h3>
+                    <p>Supplying labor and site supervisors for large-scale construction and infrastructure projects.</p>
+                </div>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-first-aid"></i></div>
+                <div class="sector-info">
+                    <h3>Healthcare</h3>
+                    <p>Staffing support for hospitals, including ward boys, housekeeping, and front desk staff.</p>
+                </div>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-bank"></i></div>
+                <div class="sector-info">
+                    <h3>Banking & Finance</h3>
+                    <p>Deploying verified security personnel and office assistants for branches and ATMs.</p>
+                </div>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-truck"></i></div>
+                <div class="sector-info">
+                    <h3>Logistics</h3>
+                    <p>Providing warehouse managers, loaders, and drivers for supply chain companies.</p>
+                </div>
+            </div>
+            <div class="sector-card">
+                <div class="sector-icon"><i class="ph-fill ph-shopping-cart"></i></div>
+                <div class="sector-info">
+                    <h3>Retail & Malls</h3>
+                    <p>Housekeeping, security, and sales staff for shopping malls and retail outlets.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="logo-section">
+        <div class="container" style="padding-top: 0; padding-bottom: 0;">
+            <h2 class="sector-title" style="margin-top: 0;">Trusted By</h2>
+            <div class="client-logos animate-enter delay-300">
+                <div class="client-box"><div class="client-placeholder">CLIENT 1</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 2</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 3</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 4</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 5</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 6</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 7</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 8</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 9</div></div>
+                <div class="client-box"><div class="client-placeholder">CLIENT 10</div></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container animate-enter delay-300">
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <div class="quote-icon"><i class="ph-fill ph-quotes"></i></div>
+                <p class="testimonial-text">"Vishv Enterprise has been our go-to partner for industrial staffing for over 5 years. Their compliance record is impeccable, and the quality of manpower provided is top-notch. Highly recommended for their professionalism."</p>
+                <div class="client-name">Mr. Rajesh Patel</div>
+                <div class="client-role">Plant Head, Gujarat Textiles Ltd.</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p>Trusted manpower solutions for industrial & corporate infrastructure.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="client.html">Our Clients</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Manpower Supply</a></li>
+                    <li><a href="#">Healthcare Management</a></li>
+                    <li><a href="#">Global Staffing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Contact</h3>
+                <p style="margin-bottom: 10px;"><i class="ph-fill ph-map-pin" style="color:var(--primary);"></i> Gandhinagar, Gujarat</p>
+                <p><i class="ph-fill ph-envelope" style="color:var(--primary);"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+    </script>
+</body>
+</html>

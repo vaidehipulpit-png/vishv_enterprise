@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future of Industrial Manpower - Vishv Insights</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&family=Inter:wght@400;500;600&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & CORE STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #ffffff; 
+            color: #334155; 
+            display: flex; flex-direction: column; min-height: 100vh; 
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+        
+        /* Headings use Outfit font for modern industrial look */
+        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: #ffffff; 
+            position: sticky; top: 0; z-index: 100; 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 280px; }
+        .logo img { height: 80px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 15px; font-weight: 600; color: #475569; letter-spacing: 0.5px; }
+        .nav-link:hover { color: #f97316; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background: linear-gradient(135deg, #f97316, #ea580c); 
+            color: white; font-weight: 700; padding: 12px 28px; border-radius: 30px; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+        .btn-apply:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(249, 115, 22, 0.5); }
+
+        .mobile-btn { display: none; background: none; border: none; color: #334155; font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid #e2e8f0; position: absolute; width: 100%; left: 0; top: 90px; box-shadow: 0 10px 15px rgba(0,0,0,0.05); }
+        .mobile-link { display: block; padding: 15px 20px; border-bottom: 1px solid #f1f5f9; color: #475569; font-weight: 600; }
+
+        /* =========================================
+           3. ARTICLE HEADER
+           ========================================= */
+        .article-header {
+            max-width: 800px; margin: 0 auto; padding: 60px 20px 40px; text-align: center;
+        }
+        
+        .back-link { 
+            display: inline-flex; align-items: center; color: #64748b; font-size: 14px; font-weight: 600; margin-bottom: 30px; 
+        }
+        .back-link:hover { color: #f97316; }
+        .back-link i { margin-right: 5px; }
+
+        .meta-tags { 
+            display: flex; justify-content: center; align-items: center; gap: 15px; margin-bottom: 20px; font-size: 13px; color: #94a3b8; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .category-badge { 
+            background: #ecfdf5; color: #059669; padding: 6px 12px; border-radius: 20px; 
+        }
+
+        .article-title { 
+            font-size: 42px; font-weight: 800; color: #0f172a; line-height: 1.2; margin-bottom: 30px; 
+        }
+
+        /* Author Block */
+        .author-block { 
+            display: flex; align-items: center; justify-content: center; 
+        }
+        .author-img { 
+            width: 50px; height: 50px; background-color: #e2e8f0; border-radius: 50%; 
+            display: flex; align-items: center; justify-content: center; font-weight: 700; color: #64748b; margin-right: 15px; 
+        }
+        .author-info { text-align: left; }
+        .author-name { font-weight: 700; color: #0f172a; font-size: 16px; }
+        .author-role { font-size: 13px; color: #64748b; }
+
+        /* =========================================
+           4. FEATURED IMAGE
+           ========================================= */
+        .featured-image-container {
+            max-width: 1000px; margin: 0 auto 60px; padding: 0 20px;
+        }
+        .featured-image {
+            width: 100%; height: 500px; object-fit: cover; border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* =========================================
+           5. ARTICLE CONTENT (Typography)
+           ========================================= */
+        .content-body {
+            max-width: 740px; margin: 0 auto; padding: 0 20px 80px;
+            font-family: 'Merriweather', serif; /* Serif font for better reading experience */
+            font-size: 18px; line-height: 1.9; color: #334155;
+        }
+
+        .content-body p { margin-bottom: 30px; }
+        
+        .content-body .lead { 
+            font-size: 22px; line-height: 1.6; color: #0f172a; font-weight: 300; margin-bottom: 40px; border-bottom: 1px solid #e2e8f0; padding-bottom: 40px;
+        }
+
+        .content-body h2 { 
+            font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: #0f172a; 
+            margin-top: 50px; margin-bottom: 20px; 
+        }
+
+        .content-body ul { 
+            list-style: disc; padding-left: 20px; margin-bottom: 30px; 
+        }
+        .content-body li { margin-bottom: 10px; }
+        .content-body strong { color: #0f172a; font-weight: 700; }
+
+        /* Quote Box */
+        .quote-box {
+            background-color: #fff7ed; border-left: 5px solid #f97316;
+            padding: 30px; margin: 40px 0; border-radius: 0 12px 12px 0;
+            font-style: italic; font-size: 20px; color: #431407; font-family: 'Outfit', sans-serif;
+        }
+
+        /* =========================================
+           6. RELATED ARTICLES
+           ========================================= */
+        .related-section { background-color: #f8fafc; padding: 80px 20px; }
+        .related-title { text-align: center; font-size: 28px; font-weight: 800; color: #0f172a; margin-bottom: 40px; }
+        
+        .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1200px; margin: 0 auto; }
+        
+        .related-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); transition: 0.3s; }
+        .related-card:hover { transform: translateY(-5px); box-shadow: 0 10px 15px rgba(0,0,0,0.1); }
+        .related-img { height: 200px; width: 100%; object-fit: cover; }
+        .related-body { padding: 20px; }
+        .related-h4 { font-size: 18px; font-weight: 700; color: #0f172a; margin-bottom: 10px; line-height: 1.4; }
+        .related-link { color: #f97316; font-weight: 600; font-size: 14px; font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 5px; }
+
+        /* =========================================
+           7. FOOTER
+           ========================================= */
+        footer { background-color: #020617; color: #94a3b8; padding: 60px 20px 20px; margin-top: auto; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; max-width: 1300px; margin: 0 auto; }
+        .footer-bottom { border-top: 1px solid #1e293b; margin-top: 40px; padding-top: 20px; text-align: center; font-size: 14px; font-family: 'Inter', sans-serif; }
+        .footer-links li { margin-bottom: 10px; font-family: 'Inter', sans-serif; }
+        .footer-links a:hover { color: #f97316; }
+        .footer-logo-img { height: 60px; filter: brightness(0) invert(1); margin-bottom: 15px; }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .grid { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .article-title { font-size: 32px; }
+            .featured-image { height: 300px; }
+            .logo { width: 180px; }
+            .logo img { height: 60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="compliance.html" class="nav-link">Compliance</a>
+                <a href="blog.html" class="nav-link active">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list" style="color: #334155;"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="about.html" class="mobile-link">About Us</a>
+            <a href="service.html" class="mobile-link">Services</a>
+            <a href="compliance.html" class="mobile-link">Compliance</a>
+            <a href="blog.html" class="mobile-link" style="color: #f97316;">Blog</a>
+            <a href="apply.html" class="mobile-link">Apply for Job</a>
+        </div>
+    </nav>
+
+    <div class="article-header">
+        <a href="blog.html" class="back-link"><i class="ph-bold ph-arrow-left"></i> Back to Blog</a>
+        
+        <div class="meta-tags">
+            <span class="category-badge">Workforce Trends</span>
+            <span><i class="ph-bold ph-calendar"></i> Nov 01, 2024</span>
+            <span><i class="ph-bold ph-clock"></i> 5 min read</span>
+        </div>
+
+        <h1 class="article-title">The Future of Industrial Manpower: Balancing Automation with Skilled Labor</h1>
+
+        <div class="author-block">
+            <div class="author-img">RP</div>
+            <div class="author-info">
+                <div class="author-name">Mr. Rajesh Patel</div>
+                <div class="author-role">COO, Vishv Enterprise</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="featured-image-container">
+        <img src="https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80" 
+             alt="Factory Workers and Machines" 
+             class="featured-image">
+    </div>
+
+    <div class="content-body">
+        
+        <p class="lead">
+            The industrial landscape in Gujarat is undergoing a rapid transformation. As factories adopt advanced automation and robotics, the role of the traditional workforce is evolving. The challenge for 2025 is not replacing people with machines, but finding the right balance between technology and skilled labor.
+        </p>
+
+        <h2>The Automation Paradox</h2>
+        <p>
+            While automation is increasing production speeds in sectors like automobiles and textiles, it has created a "skill gap." Modern machines require operators who are not just physically strong but also technically proficient. 
+        </p>
+        <p>
+            Data shows that while demand for unskilled manual labor is flattening, the demand for <strong>CNC operators, Quality Control Inspectors, and Maintenance Technicians</strong> has risen by 40% in the last year alone.
+        </p>
+
+        <h2>The Hybrid Workforce Model</h2>
+        <p>
+            At Vishv Enterprise, we are championing a "Hybrid Workforce" model. This approach leverages the strengths of both humans and machines:
+        </p>
+        
+        <ul>
+            <li><strong>Safety First:</strong> Robots handle dangerous tasks (like handling hazardous chemicals or heavy lifting), reducing workplace accidents.</li>
+            <li><strong>Human Oversight:</strong> Skilled supervisors monitor automated lines to ensure quality compliance and handle troubleshooting.</li>
+            <li><strong>Flexibility:</strong> Contractual manpower allows factories to scale up human staff during peak seasons when machines reach capacity.</li>
+        </ul>
+
+        <div class="quote-box">
+            "Automation isn't about replacing people; it's about upgrading their roles. We are moving from 'hard labor' to 'smart labor'."
+        </div>
+
+        <h2>Preparing for the Future</h2>
+        <p>
+            To stay competitive, industrial zones in Sanand and Dahej must focus on upskilling. Employers need to invest in training programs that teach basic machine operations and safety protocols. Vishv Enterprise is committed to bridging this gap by providing pre-screened, semi-skilled candidates ready for the modern factory floor.
+        </p>
+
+    </div>
+
+    <div class="related-section">
+        <h3 class="related-title">Related Articles</h3>
+        <div class="grid">
+            
+            <div class="related-card">
+                <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Safety" class="related-img">
+                <div class="related-body">
+                    <h4 class="related-h4">Why PPE is Non-Negotiable in 2024</h4>
+                    <a href="#" class="related-link">Read Now &rarr;</a>
+                </div>
+            </div>
+
+            <div class="related-card">
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Legal" class="related-img">
+                <div class="related-body">
+                    <h4 class="related-h4">New Labour Codes: Employer Guide</h4>
+                    <a href="#" class="related-link">Read Now &rarr;</a>
+                </div>
+            </div>
+
+            <div class="related-card">
+                <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Planning" class="related-img">
+                <div class="related-body">
+                    <h4 class="related-h4">Efficient Shift Planning Strategies</h4>
+                    <a href="#" class="related-link">Read Now &rarr;</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p style="font-size: 14px; line-height: 1.6;">Vishv Enterprise Group LLP. Providing solid commitment and first-rate services to turn aspirations into reality.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="service.html">Services</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li>Manpower Supply</li>
+                    <li>Healthcare Management</li>
+                    <li>Global Staffing</li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 15px;">Contact</h3>
+                <p><i class="ph-fill ph-map-pin"></i> Gandhinagar, Gujarat</p>
+                <p style="font-size: 14px; margin-top: 10px;"><i class="ph-fill ph-envelope"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+    </script>
+</body>
+</html>

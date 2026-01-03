@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for Job - Vishv Enterprise Group</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* =========================================
+           1. RESET & GLOBAL STYLES
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --primary: #f97316;       /* Orange */
+            --primary-dark: #c2410c;
+            --primary-light: #fff7ed;
+            --secondary: #0f172a;     /* Dark Blue */
+            --text-dark: #334155;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background-color: #f8fafc; 
+            color: var(--text-dark); 
+            display: flex; 
+            flex-direction: column; 
+            min-height: 100vh; 
+        }
+
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+
+        /* Animation Keyframes */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-up { animation: fadeUp 0.8s ease-out forwards; opacity: 0; }
+        .delay-100 { animation-delay: 0.1s; }
+
+        /* =========================================
+           2. NAVIGATION BAR
+           ========================================= */
+        nav { 
+            background-color: rgba(255, 255, 255, 0.95); 
+            backdrop-filter: blur(10px);
+            position: sticky; top: 0; z-index: 1000; 
+            box-shadow: var(--shadow-md); 
+            padding: 0 20px; 
+            height: 90px;
+        }
+
+        .nav-container { 
+            max-width: 1200px; height: 100%; margin: 0 auto; 
+            display: flex; align-items: center; justify-content: space-between; 
+        }
+        
+        .logo { display: flex; align-items: center; height: 100%; width: 200px; }
+        .logo img { height: 70px; width: 100%; object-fit: contain; object-position: left center; }
+
+        .desktop-menu { display: flex; gap: 30px; align-items: center; }
+        .nav-link { font-size: 15px; font-weight: 600; color: var(--text-light); position: relative; }
+        
+        /* Nav Link Underline Effect */
+        .nav-link::after {
+            content: ''; position: absolute; width: 0; height: 2px; 
+            bottom: -4px; left: 0; background-color: var(--primary); 
+            transition: var(--transition);
+        }
+        .nav-link:hover { color: var(--primary); }
+        .nav-link:hover::after { width: 100%; }
+        .nav-link.active { color: #0284c7; }
+        
+        .btn-apply { 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; font-weight: 700; padding: 12px 28px; border-radius: 50px; 
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+            transition: var(--transition);
+        }
+        .btn-apply:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(249, 115, 22, 0.4); }
+
+        .mobile-btn { display: none; background: none; border: none; color: var(--text-dark); font-size: 32px; cursor: pointer; }
+        .mobile-menu { display: none; background-color: white; border-top: 1px solid var(--border); position: absolute; width: 100%; left: 0; top: 90px; box-shadow: var(--shadow-lg); z-index: 999; }
+        .mobile-link { display: block; padding: 15px 25px; border-bottom: 1px solid #f1f5f9; color: var(--text-light); font-weight: 600; }
+        .mobile-link:hover { background-color: var(--primary-light); color: var(--primary); padding-left: 30px; }
+
+        /* =========================================
+           3. HERO SLIDER (REPLACES PAGE HEADER)
+           ========================================= */
+        .hero-slider {
+            position: relative;
+            width: 100%;
+            height: 600px; /* Adjust height as needed */
+            overflow: hidden;
+            background-color: var(--secondary);
+            padding-bottom: 80px; /* Space for the overlapping form */
+        }
+
+        .slide {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide.active { opacity: 1; z-index: 1; }
+
+        /* Background Image with Dark Overlay */
+        .slide-bg {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover; background-position: center;
+            z-index: -1;
+        }
+        .slide-bg::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.6));
+        }
+
+        .slide-content {
+            text-align: center; color: white; padding: 0 20px;
+            max-width: 900px; z-index: 2;
+            transform: translateY(20px); transition: transform 0.8s ease-out, opacity 0.8s ease-out;
+            opacity: 0;
+        }
+
+        .slide.active .slide-content {
+            transform: translateY(0); opacity: 1;
+        }
+
+        .slide-content h1 { font-size: 48px; font-weight: 800; margin-bottom: 20px; line-height: 1.2; }
+        .slide-content h1 span { color: var(--primary); }
+        .slide-content p { font-size: 20px; color: #cbd5e1; font-weight: 500; max-width: 700px; margin: 0 auto 30px; }
+
+        /* Slider Controls */
+        .slider-nav {
+            position: absolute; top: 50%; width: 100%;
+            display: flex; justify-content: space-between; padding: 0 40px;
+            transform: translateY(-50%); z-index: 10;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white; font-size: 24px; width: 50px; height: 50px;
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+        .nav-btn:hover { background: var(--primary); border-color: var(--primary); }
+
+        .slider-dots {
+            position: absolute; bottom: 120px; left: 0; width: 100%;
+            display: flex; justify-content: center; gap: 10px; z-index: 10;
+        }
+        .dot {
+            width: 12px; height: 12px; background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%; cursor: pointer; transition: 0.3s;
+        }
+        .dot.active { background: var(--primary); transform: scale(1.2); }
+
+        /* =========================================
+           4. APPLICATION FORM
+           ========================================= */
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px 80px 20px; position: relative; z-index: 20; margin-top: -100px; }
+        
+        .form-card { 
+            background: white; border-radius: 20px; overflow: hidden; 
+            box-shadow: var(--shadow-lg); border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+
+        .form-header { 
+            background: linear-gradient(to right, #f8fafc, #fff); 
+            padding: 25px 40px; border-bottom: 1px solid var(--border); 
+            display: flex; align-items: center; 
+        }
+        .form-header i { 
+            font-size: 28px; color: var(--primary); margin-right: 15px; 
+            background: var(--primary-light); padding: 10px; border-radius: 12px;
+        }
+        .form-header h2 { font-size: 20px; font-weight: 700; color: var(--secondary); margin: 0; }
+
+        .form-body { padding: 40px; }
+        
+        .section-heading { 
+            font-size: 13px; font-weight: 800; text-transform: uppercase; color: #94a3b8; letter-spacing: 1.5px; 
+            border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 25px; 
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+        .grid-1 { display: grid; grid-template-columns: 1fr; gap: 30px; margin-bottom: 30px; }
+
+        .form-group label { display: block; font-size: 14px; font-weight: 600; color: var(--text-dark); margin-bottom: 8px; }
+        
+        /* Input Styling & Hover Effects */
+        .form-input, .form-select, .form-textarea { 
+            width: 100%; padding: 14px; 
+            border: 1px solid #cbd5e1; border-radius: 10px; 
+            font-size: 15px; outline: none; transition: var(--transition); 
+            background-color: #fff; color: var(--text-dark);
+            font-family: inherit;
+        }
+        
+        .form-input:hover, .form-select:hover, .form-textarea:hover {
+            border-color: #94a3b8;
+        }
+
+        .form-input:focus, .form-select:focus, .form-textarea:focus { 
+            border-color: var(--primary); 
+            box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1); 
+            transform: translateY(-2px);
+        }
+
+        /* File Upload Box */
+        .file-upload { 
+            border: 2px dashed #cbd5e1; border-radius: 12px; padding: 40px; text-align: center; 
+            cursor: pointer; transition: var(--transition); position: relative; background: #f8fafc;
+        }
+        .file-upload:hover { 
+            border-color: var(--primary); background: var(--primary-light); 
+            transform: scale(1.02);
+        }
+        .upload-icon { font-size: 36px; color: #94a3b8; margin-bottom: 15px; transition: 0.3s; }
+        .file-upload:hover .upload-icon { color: var(--primary); transform: translateY(-5px); }
+        
+        .upload-text { font-size: 15px; color: var(--text-light); }
+        .upload-text span { color: var(--primary); font-weight: 700; text-decoration: underline; }
+        .file-input { position: absolute; width: 100%; height: 100%; top: 0; left: 0; opacity: 0; cursor: pointer; }
+
+        /* Submit Button */
+        .submit-btn { 
+            width: auto; padding: 16px 45px; 
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white; font-weight: 700; font-size: 16px; 
+            border: none; border-radius: 50px; 
+            cursor: pointer; transition: var(--transition); 
+            float: right; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 4px 15px rgba(249, 115, 22, 0.3);
+        }
+        .submit-btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 8px 25px rgba(249, 115, 22, 0.4); 
+        }
+        .submit-btn:active { transform: translateY(-1px); }
+
+        .helper-text { text-align: center; font-size: 14px; color: var(--text-light); margin-top: 25px; clear: both; }
+        .helper-text i { color: #0284c7; margin-right: 5px; font-size: 16px; vertical-align: middle; }
+
+        /* =========================================
+           5. FOOTER
+           ========================================= */
+        footer { 
+            background-color: var(--secondary); color: #94a3b8; 
+            padding: 80px 20px 30px; margin-top: auto; 
+            border-top: 5px solid var(--primary);
+        }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .footer-bottom { 
+            border-top: 1px solid rgba(255,255,255,0.1); 
+            margin-top: 60px; padding-top: 30px; 
+            text-align: center; font-size: 14px; opacity: 0.7;
+        }
+        .footer-links li { margin-bottom: 12px; }
+        .footer-links a { display: inline-block; transition: 0.2s; }
+        .footer-links a:hover { color: var(--primary); transform: translateX(5px); }
+        .footer-logo-img { height: 70px; width: auto; background: white; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; display: inline-block; }
+
+        /* =========================================
+           6. RESPONSIVE
+           ========================================= */
+        @media (max-width: 768px) {
+            .desktop-menu { display: none; }
+            .mobile-btn { display: block; }
+            .mobile-menu.active { display: block; }
+            .footer-grid { grid-template-columns: 1fr; gap: 40px; }
+            .grid-2 { grid-template-columns: 1fr; gap: 20px; }
+            .submit-btn { width: 100%; justify-content: center; float: none; }
+            .logo { width: 160px; }
+            .hero-slider { height: 500px; }
+            .slide-content h1 { font-size: 32px; }
+            .slider-nav { padding: 0 10px; }
+            .form-body { padding: 25px; }
+            .container { margin-top: -60px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <img src="img/v-logo.png" alt="Vishv Enterprise Group LLP">
+            </a>
+
+            <div class="desktop-menu">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="service.html" class="nav-link">Services</a>
+                <a href="client.html" class="nav-link">Our Clients</a>
+                <a href="about.html" class="nav-link">About Us</a>
+                <a href="blog.html" class="nav-link">Blog</a>
+                <a href="apply.html" class="btn-apply">Apply for Job</a>
+            </div>
+
+            <button class="mobile-btn" onclick="toggleMenu()">
+                <i id="menu-icon" class="ph ph-list"></i>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="service.html" class="mobile-link">Services</a>
+            <a href="client.html" class="mobile-link">Our Clients</a>
+             <a href="about.html" class="mobile-link">About Us</a>
+              <a href="blog.html" class="mobile-link">Blog</a>
+            <a href="apply.html" class="mobile-link" style="color: #f97316;">Apply for Job</a>
+        </div>
+    </nav>
+
+    <div class="hero-slider" id="homeSlider">
+        <div class="slide active">
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide-content animate-up">
+                <h1>Improving Quality <br><span>Of Your Living</span></h1>
+                <p>Mission: To provide exceptional staffing solutions and create career opportunities for job seekers while fostering trust.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1504384308090-c54be385263d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide-content">
+                <h1>Join Our <br><span>Workforce</span></h1>
+                <p>Build your career with Vishv Enterprise. We are hiring skilled personnel for major industrial projects across India.</p>
+            </div>
+        </div>
+
+        <div class="slide">
+            <div class="slide-bg" style="background-image: url('https://images.unsplash.com/photo-1621905251189-08b45d6a269e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1600&q=80');"></div>
+            <div class="slide-content">
+                <h1>Expert Manpower <br><span>Solutions</span></h1>
+                <p>Connecting businesses with the best talent. From healthcare to industrial sectors, we bridge the gap.</p>
+            </div>
+        </div>
+
+        <div class="slider-nav">
+            <button class="nav-btn" onclick="prevSlide()"><i class="ph-bold ph-caret-left"></i></button>
+            <button class="nav-btn" onclick="nextSlide()"><i class="ph-bold ph-caret-right"></i></button>
+        </div>
+
+        <div class="slider-dots">
+            <div class="dot active" onclick="goToSlide(0)"></div>
+            <div class="dot" onclick="goToSlide(1)"></div>
+            <div class="dot" onclick="goToSlide(2)"></div>
+        </div>
+    </div>
+
+    <div class="container animate-up delay-100">
+        <div class="form-card">
+            
+            <div class="form-header">
+                <i class="ph-fill ph-user-plus"></i>
+                <h2>Job Application Form</h2>
+            </div>
+
+            <div class="form-body">
+                <form onsubmit="event.preventDefault(); alert('Application Submitted Successfully!');">
+                    
+                    <div class="section-heading">1. Personal Details</div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" class="form-input" placeholder="As per Aadhaar Card" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Date of Birth *</label>
+                            <input type="date" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Mobile Number *</label>
+                            <input type="tel" class="form-input" placeholder="+91 98765 43210" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address (Optional)</label>
+                            <input type="email" class="form-input" placeholder="john@example.com">
+                        </div>
+                    </div>
+
+                    <div class="section-heading" style="margin-top: 20px;">2. Job Preference</div>
+                    <div class="grid-1">
+                        <div class="form-group">
+                            <label>Position Applying For *</label>
+                            <select class="form-select" required>
+                                <option value="" disabled selected>Select a position...</option>
+                                <optgroup label="Industrial / Factory">
+                                    <option>Machine Operator</option>
+                                    <option>Assembly Line Worker</option>
+                                    <option>Helper / Loader</option>
+                                    <option>Supervisor</option>
+                                </optgroup>
+                                <optgroup label="Corporate / Office">
+                                    <option>Data Entry Operator</option>
+                                    <option>Office Assistant / Peon</option>
+                                    <option>Receptionist</option>
+                                </optgroup>
+                                <optgroup label="Facility Management">
+                                    <option>Security Guard</option>
+                                    <option>Housekeeping Staff</option>
+                                    <option>Driver</option>
+                                </optgroup>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Total Experience</label>
+                            <select class="form-select">
+                                <option>Fresher</option>
+                                <option>1-2 Years</option>
+                                <option>3-5 Years</option>
+                                <option>5+ Years</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Qualification</label>
+                            <input type="text" class="form-input" placeholder="e.g. 10th Pass, ITI, Graduate">
+                        </div>
+                    </div>
+
+                    <div class="section-heading" style="margin-top: 20px;">3. Additional Info</div>
+                    <div class="grid-1">
+                        <div class="form-group">
+                            <label>Current Address</label>
+                            <textarea rows="3" class="form-textarea" placeholder="Enter your full address..."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Upload Resume / CV / ID Proof</label>
+                            <div class="file-upload">
+                                <input type="file" class="file-input">
+                                <div class="upload-icon"><i class="ph ph-upload-simple"></i></div>
+                                <div class="upload-text"><span>Click to Upload</span> or drag and drop</div>
+                                <div style="font-size: 13px; color: #94a3b8; margin-top: 8px;">PDF, JPG, PNG up to 5MB</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="overflow: hidden; padding-top: 10px;">
+                        <button type="submit" class="submit-btn">
+                            Submit Application <i class="ph-bold ph-paper-plane-right"></i>
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+        <div class="helper-text">
+            <p><i class="ph-fill ph-info"></i> Note: Vishv Enterprise does not charge any money for job applications. Beware of fraudulent agents.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div>
+                <img src="img/v-logo.png" alt="Vishv Enterprise Logo" class="footer-logo-img">
+                <p>Trusted manpower solutions for industrial & corporate infrastructure.</p>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="service.html">Services</a></li>
+                    <li><a href="client.html">Our Clients</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Our Solutions</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Manpower Supply</a></li>
+                    <li><a href="#">Healthcare Management</a></li>
+                    <li><a href="#">Global Staffing</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 style="color: white; margin-bottom: 20px;">Contact</h3>
+                <p style="margin-bottom: 10px;"><i class="ph-fill ph-map-pin" style="color:var(--primary);"></i> Gandhinagar, Gujarat</p>
+                <p><i class="ph-fill ph-envelope" style="color:var(--primary);"></i> info@vishvgroup.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; <span id="year"></span> Vishv Enterprise Group LLP. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            var menu = document.getElementById('mobile-menu');
+            var icon = document.getElementById('menu-icon');
+            
+            if (menu.classList.contains('active')) {
+                menu.classList.remove('active');
+                icon.classList.remove('ph-x');
+                icon.classList.add('ph-list');
+            } else {
+                menu.classList.add('active');
+                icon.classList.remove('ph-list');
+                icon.classList.add('ph-x');
+            }
+        }
+
+        // =======================
+        // SLIDER LOGIC
+        // =======================
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        let currentSlide = 0;
+        let slideInterval;
+
+        function showSlide(index) {
+            // Wrap around index
+            if (index >= slides.length) currentSlide = 0;
+            else if (index < 0) currentSlide = slides.length - 1;
+            else currentSlide = index;
+
+            // Remove active class from all
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            // Add active class to current
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            resetInterval();
+        }
+
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+            resetInterval();
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+            resetInterval();
+        }
+
+        function startInterval() {
+            slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+
+        // Initialize Slider
+        startInterval();
+    </script>
+</body>
+</html>
